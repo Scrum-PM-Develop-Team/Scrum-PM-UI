@@ -17,7 +17,7 @@
       <LineChart class="card2" />
     </el-card>
     <el-card class="card1">
-      <div>卡片名称</div>
+      <div>小组任务完成率图</div>
       <OverviewReport class="card2" />
     </el-card>
   </div>
