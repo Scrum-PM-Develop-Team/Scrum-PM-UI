@@ -1,92 +1,85 @@
 <template>
-    
-    <div style="background-color: #EBEBEB;min-height:800px">
-        <div style="width:100%;background-color: #636363; overflow: hidden">
-            <span class="demonstration" style="float:left;padding-top:10px;color:white;margin-left:1%">
-                网站首页
-            </span>
-            <span class="demonstration" style="float:left;padding:5px;color:white;margin-left:2%;width:15%">
-                <el-input
-                        placeholder="请输入"
-                        icon="search"
-                        v-model="searchCriteria"
-                        :on-icon-click="handleIconClick">
-                </el-input>
-            </span>
+  <div id="app">
+    <el-container>
+      <el-header id="page-header">
+        <el-menu 
+        :default-active="activeIndex" 
+        class="el-menu-demo" 
+        mode="horizontal" 
+        @select="handleSelect"
 
-            <span class="demonstration" style="float:right;padding-top:10px;margin-right:1%">
-                <el-dropdown trigger="click">
-                  <span class="el-dropdown-link" style="color:white">
-                    个人中心<i class="el-icon-caret-bottom el-icon--right"></i>
-                  </span>
-                  <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>个人信息</el-dropdown-item>
-                    <el-dropdown-item>切换用户</el-dropdown-item>
-                    <el-dropdown-item>退出登录</el-dropdown-item>
-                  </el-dropdown-menu>
-                </el-dropdown>
-            </span>
+        id="navi">
+            <el-menu-item index="1">我的工作台</el-menu-item>
+
+            <el-menu-item index="2">项目迭代</el-menu-item>
+
+            <el-menu-item index="3">任务看板</el-menu-item>
+
+            <el-menu-item index="4">统计中心</el-menu-item>
+
+            <el-submenu index="5" id="user-center-menu">
+                <template slot="title">个人中心</template>
+                    <el-menu-item index="5-1">账户信息</el-menu-item>
+                    <el-menu-item index="5-2">设置选项</el-menu-item>
+                    <el-menu-item index="5-3" divided>退出登录</el-menu-item>
+            </el-submenu>
+        </el-menu>
+      </el-header>
+      <el-main id="page-body">
+        <div>
+            <router-view></router-view>
         </div>
+      </el-main>
+    </el-container>
 
-        <div style="margin-top:5px">
-            <el-row :gutter="10">
-                <el-col :xs="4" :sm="4" :md="4" :lg="4">
-                    <div>
-                        <el-menu default-active="1" class="el-menu-vertical-demo" style="min-height:800px" @select="handleSelect">
-                            <el-menu-item index="1"><i class="el-icon-message"></i>导航一</el-menu-item>
-                            <el-menu-item index="2"><i class="el-icon-menu"></i>导航二</el-menu-item>
-                            <el-menu-item index="3"><i class="el-icon-setting"></i>导航三</el-menu-item>
-                        </el-menu>
-                    </div>
-                </el-col>
-                <el-col :xs="20" :sm="20" :md="20" :lg="20">
-                    <div>
-                        <div style="border: 1px solid #A6A6A6; border-radius:6px; padding:5px; margin:2px; background-color: white">
-                            <el-breadcrumb separator="/">
-                                <el-breadcrumb-item v-for="item in breadcrumbItems" :key="item">{{item}}</el-breadcrumb-item>
-                            </el-breadcrumb>
-                        </div>
-                    </div>
-
-                    <div style="margin-top:10px">
-                        <router-view></router-view>
-                    </div>
-                </el-col>
-            </el-row>
-        </div>
-    </div>
+  </div>
 </template>
-<script type="text/ecmascript-6">
-    export default {
-        data(){
-            return {
-                searchCriteria: '',
-                breadcrumbItems: ['导航一'],
+
+<script>
+export default {
+    data(){
+        return{
+        usr:"",
+        psw:"",
+        activeIndex:"1"
+        };
+    },
+    methods: {
+        handleSelect(key, keyPath){
+            this.$notify({
+                title: 'It works!',
+                type: 'success',
+                message: key,
+                duration: 5000
+            },);
+            switch(key){
+                case '1':
+                    this.$router.push('/Page1');
+                    break;
+                case '2':
+                    this.$router.push('/Page2')
+                    break;
+                case '3':
+                    this.$router.push('/Page3')
+                    break;
+                case '4':
+                    this.$router.push('/Page4')
+                    break;
+                case '5-1':
+                    this.$router.push('/Login')
+                    break;
             }
-        },
-
-        methods:{
-            handleIconClick(ev) {
-                console.log(ev);
-            },
-
-            handleSelect(key, keyPath){
-                switch(key){
-                    case '1':
-                        this.$router.push('/Page1');
-                        this.breadcrumbItems  = ['导航一']  
-                        break;
-                    case '2':
-                        this.$router.push('/Page2')
-                        this.breadcrumbItems  = ['导航二']
-                        break;
-                    case '3':
-                        this.$router.push('/Page3')
-                        this.breadcrumbItems  = ['导航三']
-                        break;
-                }
-            },
-
-        },
+        }
     }
+}
 </script>
+<style>
+#navi {
+  font-family: Helvetica, sans-serif;
+  text-align: center;
+}
+#user-center-menu{
+  float: right;
+}
+
+</style>
