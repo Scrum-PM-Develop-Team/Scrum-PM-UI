@@ -7,6 +7,10 @@ import router from './router'
 import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
 import store from './vuex/index';
+
+var axios = require('axios')
+axios.defaults.baseURL = 'http://47.97.196.50:8886'
+Vue.prototype.$axios = axios
 //加载ElementUI
 Vue.use(ElementUI)
 //阻止产生生产提示
