@@ -33,27 +33,23 @@
           username: "",
           password: "",
         },
-        // rules: {
-        //   username: [
-        //     {required: true, message: "用户名不能为空", trigger: 'blur'},
-        //     {min: 3, max: 10, message: "用户名3-5位", trigger: 'blur'}
-        //   ],
-        //   password: [
-        //     {required: true, message: "密码不能为空", trigger: 'blur'},
-        //     {min: 3, max: 10, message: "密码3-5位", trigger: 'blur'}
-        //   ]
-        // }
       };
     },
     methods: {
       submitForm(formName) {
-        this.$notify({
-          title: 'It works!',
-          type: 'success',
-          duration: 5000,
-          message:this.form.username
+        this.$axios.get('/rest/user?userName='+this.form.username)
+        .then(
+          Response=>{
+            this.$notify({
+              title: 'It works!',
+              type: 'success',
+              message:Response,
+              duration: 5000,
+            });
           }
-        );
+        )
+                
+        
       }
     }
   };  
