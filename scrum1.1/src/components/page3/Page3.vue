@@ -1,5 +1,5 @@
 <template>
-    <el-card>
+    <el-card >
     <div class="header">
         <div class="left-header">
             <div>
@@ -30,7 +30,7 @@
     </div>
 
     <div id="body">
-    <el-row :gutter="20">
+    <el-row :gutter="20" class='biggest'>
         <el-col :span="6" ><div class="grid-content bg-purple">
             <div class = 'state-title'>
                 <div>
@@ -267,6 +267,9 @@ export default {
         width: 1500px;
         margin: 0 auto;
     } */
+    .biggest{
+        padding-right:40px;
+    }
     .taskName{        
         font-size: 20px;
         font-family: "Microsoft JhengHei";
