@@ -335,6 +335,8 @@ export default {
     .card{
         margin: 10px;
         padding-bottom: 20px;
+        width: auto;
+        height: auto;
     }
     
     .state-title{
