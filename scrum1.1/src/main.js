@@ -8,7 +8,6 @@ import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
 //import store from './vuex/index';
 import store from './store/store'
-
 var axios = require('axios')
 axios.defaults.baseURL = 'http://47.97.196.50:8886'
 // 全局注册，之后可在其他组件中通过 this.$axios 发送数据
