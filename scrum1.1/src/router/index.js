@@ -1,33 +1,33 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Page1 from '../components/Page1/Page1.vue'
-import Page2 from '../components/Page2/Page2.vue'
-import Page3 from '../components/Page3/Page3.vue'
-import Page4 from '../components/Page4/Page4.vue'
-import LoginPage from '../components/LoginPage/LoginPage.vue'
+import Home from '../components/HomePage/HomePage.vue'
+import Iteration from '../components/Iteration/Iteration.vue'
+import TaskBoard from '../components/TaskBoardPage/TaskBoardPage.vue'
+import Info from '../components/InfoPage/InfoPage.vue'
+import Login from '../components/LoginPage/LoginPage.vue'
 
 Vue.use(Router)
 export default new Router({
     routes:[
       {
-        path: '/Page1', 
-        component: Page1
+        path: '/Home', 
+        component: Home
       },
       {
-        path: '/Page2', 
-        component: Page2
+        path: '/Iteration', 
+        component: Iteration
       },
       {
-        path:'/Page3', 
-        component: Page3
+        path:'/TaskBoard', 
+        component: TaskBoard
       },
       {
-        path:'/Page4',
-        component:Page4
+        path:'/Info',
+        component:Info
       },
       {
         path:'/Login',
-        component:LoginPage
+        component:Login
       }
     ]
 })
