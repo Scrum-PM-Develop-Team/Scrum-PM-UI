@@ -15,10 +15,10 @@
 </style>
 
 <script>
-import TaskBoardMain from './components/TaskBoardMain'
-import MainMenu from './components/MainMenu'
+import TaskBoardMain from './TaskBoardMain'
+import MainMenu from './MainMenu'
 export default {
-  name: 'App',
+  name: 'IterationPage',
   components: {TaskBoardMain, MainMenu},
   data () {
     return {

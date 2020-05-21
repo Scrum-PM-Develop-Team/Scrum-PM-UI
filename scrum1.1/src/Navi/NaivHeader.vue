@@ -37,16 +37,16 @@
                 });
                 switch(key){
                     case '1':
-                        this.$router.push('/Page1');
+                        this.$router.push('/Home');
                         break;
                     case '2':
-                        this.$router.push('/Page2')
+                        this.$router.push('/Iteration')
                         break;
                     case '3':
-                        this.$router.push('/Page3')
+                        this.$router.push('/TaskBoard')
                         break;
                     case '4':
-                        this.$router.push('/Page4')
+                        this.$router.push('/Info')
                         break;
                     case '5-1':
                         this.$router.push('/Login')
