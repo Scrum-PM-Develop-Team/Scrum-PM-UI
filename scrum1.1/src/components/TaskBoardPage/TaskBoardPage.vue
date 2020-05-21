@@ -1,5 +1,5 @@
 <template>
-    <el-card>
+    <el-card >
     <div class="header">
         <div class="left-header">
             <div>
@@ -30,7 +30,7 @@
     </div>
 
     <div id="body">
-    <el-row :gutter="20">
+    <el-row :gutter="20" class='biggest'>
         <el-col :span="6" ><div class="grid-content bg-purple">
             <div class = 'state-title'>
                 <div>
@@ -174,7 +174,6 @@ export default {
           })
          console.log( iteration[0])
           this.myArray = iteration[0].taskVOs
-
           for (let i = 0; i < this.myArray.length; i++) { 
               if(this.myArray[i].taskState=='准备中'){this.myArray1.push(this.myArray[i])}
               if(this.myArray[i].taskState=='执行中'){this.myArray2.push(this.myArray[i])}
@@ -241,7 +240,6 @@ export default {
                 this.myArray3.sort( (a,b)=>{return this.highPSort(a,b)})
                 this.myArray4.sort((a,b)=>{return this.highPSort(a,b)})
                 break
-
          }
       },
         checkMove(evt){
@@ -255,7 +253,6 @@ export default {
       }
             
   }}
-
 </script>
 
 <style scoped>
@@ -267,6 +264,9 @@ export default {
         width: 1500px;
         margin: 0 auto;
     } */
+    .biggest{
+        padding-right:40px;
+    }
     .taskName{        
         font-size: 20px;
         font-family: "Microsoft JhengHei";
@@ -277,7 +277,6 @@ export default {
         float:left; 
         padding-top: 0px;
         padding-bottom: 12px;
-
     }
     #紧急{       
         background-color:rgba(236, 59, 59, 0.4);
@@ -335,6 +334,8 @@ export default {
     .card{
         margin: 10px;
         padding-bottom: 20px;
+        width: auto;
+        height: auto;
     }
     
     .state-title{
