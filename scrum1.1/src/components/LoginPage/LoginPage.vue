@@ -1,78 +1,49 @@
 <template>
-  <div id="loginPage">
-    <el-row id="bland-row">
-    </el-row>
-    <el-col :span="12" :offset="6">
-      <el-card id="login-card">
-        <div slot="header" class="clearfix">
-          <b>欢迎登录</b>
-          <el-button style="float: right; padding: 3px 0" type="text">注册</el-button>
-        </div>
-        <div id="card-body">
-          <div id="username-input" class="demo-input-suffix">
-            <el-input placeholder="请输入用户名" v-model="form.username"></el-input>
+  <div style="background:url('..\..\assets\loginBackground.webp.jpg')">
+    <el-col style="padding:30px; width: 400px; position: absolute; top: 20%; left:30%">
+      <el-card style="height:300px;">
+          <div slot="header" class="clearfix" style="height: 5px; display: table;content: ‘’;">
+            <b>欢迎登录</b>
           </div>
-          <div id="password-input">
-            <el-input placeholder="请输入密码" v-model="form.password" show-password></el-input>
+          <el-input placeholder="请输入用户名" v-model="info.userName"></el-input>
+          <el-input placeholder="请输入密码" v-model="info.passWord" show-password style="margin: 20px 0;"></el-input>
+          <div style="margin: 20px 0;">
+            <el-button type="primary" round @click="loginHandler">登录</el-button>
+            <el-button round @click="registerHandler">注册</el-button>
+            <el-button round @click="skinHandler" style="margin=10px">先逛逛</el-button>
           </div>
-          <div align="center">
-            <el-button type="primary" round @click="submitForm(form)">登录</el-button>
-            <el-button round>先逛逛{{form.username}},{{form.password}}</el-button>
-          </div>
-        </div>
       </el-card>
     </el-col>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  export default {
-    data() {
-      return {
-        form: {
-          username: "",
-          password: "",
-        },
-      };
-    },
-    methods: {
-      submitForm(formName) {
-        this.$axios.get('/rest/user?userName='+this.form.username)
-        .then(
-          Response=>{
-            this.$notify({
-              title: 'It works!',
-              type: 'success',
-              message:Response,
-              duration: 5000,
-            });
-          }
-        )
-                
-        
+import { mapMutations,mapActions } from 'Vuex'
+export default {
+  data(){
+    return{
+      info:{
+        userName:"",
+        password:"",
       }
     }
-  };  
+  },
+  methods:{
+    ...mapMutations(['logout','updateUserInfo']),
+    ...mapActions(['login','register']),
+    loginHandler(){
+      this.$message("成功handle登录事件")
+      this.login(this.info)
+    },
+    registerHandler(){
+      this.$message("成功handle登录事件")
+      this.register(this.info)
+    },
+
+    skinHandler(){
+      this.login("test","password")
+    }
+    
+  }
+};  
 </script>
-
-<style>
-
-.el-col{
-    padding:30px;
-}
-#login-card{
-    height:400px;
-}
-#card-header{
-  height: 20px;
-}
-#card-context{
-  height:300px;
-}
-#usr-logo{
-  padding:30px;
-}
-#username-input,#password-input{
-  padding:15px;
-}
-</style>

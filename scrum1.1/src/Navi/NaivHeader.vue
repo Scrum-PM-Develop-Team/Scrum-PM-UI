@@ -2,7 +2,6 @@
     <div>
         <el-menu 
         :default-active="activeIndex" 
-        class="el-menu-demo" 
         mode="horizontal" 
         @select="handleSelect"
         id="navi">
@@ -33,7 +32,7 @@
                     title: 'It works!',
                     type: 'success',
                     message: key,
-                    duration: 5000
+                    duration: 1000
                 });
                 switch(key){
                     case '1':
@@ -59,6 +58,7 @@
 
 <style>
 #user-center-menu{
-  float: right;
+  position:absolute;
+  left:90%
 }
 </style>
