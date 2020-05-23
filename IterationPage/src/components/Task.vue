@@ -97,6 +97,13 @@
       placeholder="任务截止时间"
       value-format="yyyy-MM-dd HH:mm:ss">
       </el-date-picker>
+       <el-date-picker
+      v-model="editTask.endTime"
+      type="datetime"
+      placeholder="任务结束时间"
+      value-format="yyyy-MM-dd HH:mm:ss"
+      clearable>
+      </el-date-picker>
       </el-row>
       <el-row>
       <el-select v-model="editTask.taskPriority" placeholder="任务紧急度">
@@ -138,13 +145,8 @@
      <el-table-column prop="taskExecutor[userName]"  label="执行人"  width="120"></el-table-column>
      <el-table-column label="操作" width="150">
       <template slot-scope="scope">
-        <el-button
-          size="mini"
-          @click="editTaskDialog(scope.row)">编辑</el-button>
-        <el-button
-          size="mini"
-          type="danger"
-          @click="taskDelete(scope.row)">删除</el-button>
+      <el-button size="mini" @click="editTaskDialog(scope.row)">编辑</el-button>
+      <el-button size="mini" type="danger" @click="taskDelete(scope.row)">删除</el-button>
       </template>
     </el-table-column>
     </el-table>
@@ -222,6 +224,7 @@ export default {
           }
         }]
       },
+      // 编辑任务模板
       editTask: {
         taskId: '',
         taskName: '',
@@ -235,6 +238,7 @@ export default {
           userId: ''
         }
       },
+      // 任务优先级
       taskPriority: [{
         value: '较低'
       }, {
@@ -242,6 +246,7 @@ export default {
       }, {
         value: '紧急'
       }],
+      // 任务状态
       taskState: [{
         value: '未开始'
       }, {
@@ -288,7 +293,6 @@ export default {
     },
     // 初始化新建任务窗口
     newTaskDialog () {
-      this.newtask.iterationId = ''
       this.newtask.taskVOs[0].taskName = ''
       this.newtask.taskVOs[0].taskRemark = ''
       this.newtask.taskVOs[0].taskState = ''
