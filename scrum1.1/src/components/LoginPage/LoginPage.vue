@@ -8,11 +8,13 @@
           <el-input placeholder="请输入用户名" v-model="info.userName"></el-input>
           <el-input placeholder="请输入密码" v-model="info.passWord" show-password style="margin: 20px 0;"></el-input>
           <div style="margin: 20px 0;">
-            <el-button type="primary" round @click="loginHandler">登录</el-button>
-            <el-button round @click="registerHandler">注册</el-button>
+            <el-button type="primary" round @click="loginHandler()">登录</el-button>
+            <el-button round @click="registerHandler()">注册</el-button>
             <el-button round @click="skinHandler" style="margin=10px">先逛逛</el-button>
           </div>
       </el-card>
+      <div>
+      </div>
     </el-col>
   </div>
 </template>
@@ -23,27 +25,24 @@ export default {
   data(){
     return{
       info:{
-        userName:"",
-        password:"",
-      }
+        userName:"张俊杰4",
+        passWord:"ffffffffff",
+      },
     }
   },
   methods:{
-    ...mapMutations(['logout','updateUserInfo']),
-    ...mapActions(['login','register']),
+    ...mapMutations('login',['login','register','logout','updateUserInfo','getAll']),
+    ...mapActions(),
     loginHandler(){
-      this.$message("成功handle登录事件")
       this.login(this.info)
+      // this.getAll()
     },
     registerHandler(){
-      this.$message("成功handle登录事件")
       this.register(this.info)
     },
-
     skinHandler(){
       this.login("test","password")
     }
-    
   }
 };  
 </script>

@@ -1,102 +1,48 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
+import login from './modules/login'
 Vue.use(Vuex)
-
+axios.defaults.baseURL = 'http://47.97.196.50:8886'
 const store = new Vuex.Store({
     state:{
-        //是否登录
-        loginFlag:false,
-        //登录/注册信息
-        userInfo:{
-            userName:"",
-            passWord:"",
-        },
+        projectIndex:0,
+    },
+    getters:{
+        currentProject:(state)=>{
+            //通过index和allData,来获取到当前项目的所有信息
+            return state.login.allData[state.projectIndex]
+        }
+    //     this.$axios
+    // .get('/api/userNameForAll?userName='+'张俊杰4')
+    //      .then(response => {
+    //           console.log(response.data.data)            
+    //       let project = response.data.data.filter(a=>a.teamProjectId == 2)
+    //       let iteration = project[0].iterationVOs.filter(function(b){
+    //           return b.iterationState=="执行中"
+    //       })
+    //      console.log( iteration[0])
+    //       this.myArray = iteration[0].taskVOs
+    //       for (let i = 0; i < this.myArray.length; i++) { 
+    //           if(this.myArray[i].taskState=='准备中'){this.myArray1.push(this.myArray[i])}
+    //           if(this.myArray[i].taskState=='执行中'){this.myArray2.push(this.myArray[i])}
+    //           if(this.myArray[i].taskState=='测试中'){this.myArray3.push(this.myArray[i])}
+    //           if(this.myArray[i].taskState=='已完成'){this.myArray4.push(this.myArray[i])}
+    //         }
+    //         console.log(this.myArray[0].taskEndTime.slice(0,10))
+    //     //console.log( this.myArray)
+    //       //console.log( this.myArray1)
+    //     })
+    //     .catch(function (error) {
+    //     console.log(error)
+    //   })
+    //  },
     },
     mutations:{
-        login(state,form){
-            console.log("成功进入login方法体")
-            //存储用户状态，向后端发送登录请求，标记已登录
-            this.$axios.get('/rest/user?userName='+userName)
-            .then(Response=>{
-                console.log(Response.data)
-                if(Response.data.isok){
-                    
-                }
-                else if(Response.data.data.userPassword!==passWord){
-                    //密码不正确，弹窗，清空
-                }else{
-                    //登录成功，弹窗，加载
-                }
-            })
-            .catch(err=>{
-                //显示错误
-            })
-            // state.loginFlag=true;
-        },
-        register(state,form){
-            axios({
-                url: 'http://47.97.196.50:8886/api/userNameForAll',
-                method: 'get',
-                params: {
-                  userName: '张俊杰4'
-                }
-              }).then(Response => {
-                var temdate = []
-                Response.data.data.forEach(element => {
-                  this.teamProjectId = element.teamProjectId
-                  console.log(this.teamProjectId)
-                  this.teamProjectName = element.teamProjectName
-                  console.log(this.teamProjectName)
-                  this.userVOs = element.userVOs
-                  console.log(this.userVOs)
-                  this.iterationVOs = element.iterationVOs
-                  console.log(this.iterationVOs)
-                  element.iterationVOs.forEach(iteration => {
-                    iteration.taskVOs.forEach(task => {
-                      temdate.push(task)
-                    })
-                  })
-                  this.taskVOs = temdate
-                  console.log(this.taskVOs)
-                })
-              })
-            },
-            // console.log("成功进入login方法体")
-            // this.$axios
-            // .post('/rest/user',
-            // {
-            //     userName:userName,
-            //     userPassword:passWord
-            // }).then(Response=>{
-            //     if(Response.data.isok){
-            //          //创建成功，发起登录
-            //     }
-            //     else{
-            //        //用户已存在，弹窗提示
-            //     }
-            // })
-            // .catch(err=>{
-            //     //显示错误
-            // })
-            //},
-        logout(state,i){
-            //修改状态，后端删除用户
-        },
-        updateUserInfo(state,i){
-
-        },
+        setIndex:(state,i)=>{state.projectIndex=i}
     },
-    actions:{
-        login(context,form){
-            context.commit('login')
-        },
-        register(context,form){
-            context.commit('register')
-        }
-
-    },
-    getter:{
-
+    modules:{
+        login,
     }
 })
 export default store;

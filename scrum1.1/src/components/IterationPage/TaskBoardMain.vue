@@ -89,13 +89,13 @@ export default {
       var temdate = []
       Response.data.data.forEach(element => {
         this.teamProjectId = element.teamProjectId
-        console.log(this.teamProjectId)
+        console.log("teamProjectId:"+this.teamProjectId)
         this.teamProjectName = element.teamProjectName
-        console.log(this.teamProjectName)
+        console.log("teamProjectName"+this.teamProjectName)
         this.userVOs = element.userVOs
-        console.log(this.userVOs)
+        console.log("userVOs"+this.userVOs)
         this.iterationVOs = element.iterationVOs
-        console.log(this.iterationVOs)
+        console.log("iterationVOs"+this.iterationVOs)
         element.iterationVOs.forEach(iteration => {
           iteration.taskVOs.forEach(task => {
             temdate.push(task)
