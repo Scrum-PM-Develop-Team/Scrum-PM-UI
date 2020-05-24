@@ -5,12 +5,26 @@
 </template>
 <script>
 import * as echarts from 'echarts'
+import axios from 'axios'
 export default {
   name: 'BarChartTwo',
   mounted () {
+    axios({
+      url: 'http://47.97.196.50:8886/api/taskComplete',
+      method: 'get',
+      params: {
+        teamProjectId: 2
+      }
+    }).then(res => {
+      let data = res.data.data
+      let xAxisData = []
+      let seriesData=[]
+      for (let key in data) {
+        xAxisData.push(key)
+        seriesData.push((data[key]*100).toFixed(2))
+      }
+      console.log(seriesData)
     let myChart = echarts.init(this.$refs.card)
-    let xAxisData = ['张俊杰4', '李季东', 'chen', '夏沁菡']
-    let seriesData = [60, 70, 70, 40]
     var option = {
       toolbox: {
         show: true,
@@ -93,7 +107,7 @@ export default {
             height: 30,
             backgroundColor: '#252453',
             borderRadius: 200,
-            position: ['-8', '-60'],
+            position: ['-5', '-40'],
             distance: 1,
             formatter: [
               '    {d|●}',
@@ -121,7 +135,7 @@ export default {
       }]
     }
     myChart.setOption(option)
-  }
+  })}
 }
 </script>
 <style>

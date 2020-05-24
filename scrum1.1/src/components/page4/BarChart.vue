@@ -5,13 +5,23 @@
 </template>
 <script>
 import * as echarts from 'echarts'
+import axios from 'axios'
 export default {
   name: 'PieChart',
   mounted () {
+    axios({
+      url: 'http://47.97.196.50:8886/api/taskStay',
+      method: 'get',
+      params: {
+        teamProjectId: 2
+      }
+    }).then(res => {
     let myChart = echarts.init(this.$refs.card)
-    let data03 = [9, 6, 7, 3]
-    let data39 = [10, 3, 5, 6]
-    let data9_ = [10, 12, 15, 6]
+    let max=Math.max(...[Math.max(...res.data.data[0]),Math.max(...res.data.data[1]),Math.max(...res.data.data[2])])
+    let data03 = res.data.data[0]
+    let data39 = res.data.data[1]
+    let data9_ = res.data.data[2]
+    console.log(res.data.data)
     var option = {
       backgroundColor: '#323a5e',
       tooltip: {
@@ -33,31 +43,6 @@ export default {
         top: '16%',
         containLabel: true
       },
-      'dataZoom': [{
-        'show': true,
-        'height': 12,
-        'xAxisIndex': [
-          0
-        ],
-        bottom: '8%',
-        'start': 10,
-        'end': 90,
-        handleIcon: 'path://M306.1,413c0,2.2-1.8,4-4,4h-59.8c-2.2,0-4-1.8-4-4V200.8c0-2.2,1.8-4,4-4h59.8c2.2,0,4,1.8,4,4V413z',
-        handleSize: '110%',
-        handleStyle: {
-          color: '#d3dee5'
-
-        },
-        textStyle: {
-          color: '#fff'},
-        borderColor: '#90979c'
-      }, {
-        'type': 'inside',
-        'show': true,
-        'height': 15,
-        'start': 1,
-        'end': 35
-      }],
       legend: {
         data: ['0-3', '3-9', '9--'],
         right: 10,
@@ -89,7 +74,7 @@ export default {
 
       yAxis: {
         type: 'value',
-        max: '20',
+        max: max.toString(),
         axisLine: {
           show: false,
           lineStyle: {
@@ -161,7 +146,7 @@ export default {
       }]
     }
     myChart.setOption(option)
-  }
+  })}
 }
 </script>
 <style>

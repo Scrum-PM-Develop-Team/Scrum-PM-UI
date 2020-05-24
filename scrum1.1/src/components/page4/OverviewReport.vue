@@ -30,6 +30,7 @@ export default {
         groups.push(items[index].key)
         rank.push(items[index].value.toFixed(3))
       }
+      console.log(groups)
       let myChart = echarts.init(this.$refs.card)
       let index = 0
       let colorList = ['#f36c6c', '#E2D776', '#57BD9F', '#7597EB']
