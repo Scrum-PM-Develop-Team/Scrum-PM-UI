@@ -35,7 +35,6 @@ export default {
 <style>
 #navi {
   font-family: Helvetica, sans-serif;
-  text-align: center;
 }
 el-header{
   position:fixed

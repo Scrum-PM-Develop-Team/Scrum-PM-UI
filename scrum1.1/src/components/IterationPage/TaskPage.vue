@@ -2,9 +2,10 @@
 <el-container style="height: 500px; border: 1px solid #eee">
     <!--顶栏容器-->
     <el-header style="text-align: font-size: 12px">
-    <el-row :gutter="20">
-      <el-col :span="4"><div class="grid-content bg-purple">
-      <el-button @click="newTaskDialog">增加任务</el-button></div></el-col>
+      <el-row :gutter="20">
+        <el-col :span="2" :offset="22"><div class="grid-content bg-purple">
+          <el-button @click="newTaskDialog" type="primary" icon="el-icon-plus" circle ></el-button></div></el-col>
+      </el-row>
       <!--增加任务的弹框-->
     <el-dialog
       title="增加任务"
@@ -128,26 +129,47 @@
       <el-button type="primary" @click="taskEdit">确 定</el-button>
       </span>
 </el-dialog>
-    </el-row>
     </el-header>
     <!--任务显示-->
-    <el-table :data="taskVOs" border="true" style="width: 100%" height="400">
-     <el-table-column prop="taskId" label="任务ID"  width="120"></el-table-column>
-     <el-table-column prop="taskName" label="任务名称" width="200"></el-table-column>
-     <el-table-column prop="taskRemark" label="任务详情"  width="300"></el-table-column>
-     <el-table-column prop="taskState"  label="任务状态"  width="120"></el-table-column>
-     <el-table-column prop="taskPriority"  label="任务紧急度"  width="120"></el-table-column>
-     <el-table-column prop="taskBeginTime"  label="任务开始时间"  width="150"></el-table-column>
-     <el-table-column prop="taskEndTime"  label="任务截止时间"  width="150"></el-table-column>
-     <el-table-column prop="endTime"  label="任务结束时间"  width="150"></el-table-column>
-     <el-table-column prop="taskExecutor[userName]"  label="执行人"  width="120"></el-table-column>
-     <el-table-column label="操作" width="150">
+    <el-table ref="multipleTable" tooltip-effect="dark" :data="taskVOs.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+     style="width: 100%"  height="500px">
+    <el-table-column type="expand">
+      <template slot-scope="props">
+        <el-form label-position="left" inline class="demo-table-expand">
+          <el-form-item label="任务ID"><span>{{ props.row.taskId }}</span></el-form-item>
+          <el-form-item label="任务名称"><span>{{ props.row.taskName }}</span></el-form-item>
+          <el-form-item label="任务详情"><span>{{ props.row.taskRemark }}</span></el-form-item>
+          <el-form-item label="任务状态"><span>{{ props.row.taskState }}</span></el-form-item>
+          <el-form-item label="任务紧急度"><span>{{ props.row.taskPriority }}</span></el-form-item>
+          <el-form-item label="任务执行人"><span>{{ props.row.taskExecutor[userName] }}</span></el-form-item>
+          <el-form-item label="任务开始时间"><span>{{ props.row.taskBeginTime }}</span></el-form-item>
+          <el-form-item label="任务截止时间"><span>{{ props.row.taskEndTime }}</span></el-form-item>
+          <el-form-item label="任务结束时间"><span>{{ props.row.endTime }}</span></el-form-item>
+        </el-form>
+        </template>
+    </el-table-column>
+    <el-table-column label="任务ID" prop="taskId"></el-table-column>
+    <el-table-column label="任务名称" prop="taskName"></el-table-column>
+    <el-table-column label="任务状态" prop="taskState"></el-table-column>
+    <el-table-column label="紧急度" prop="taskPriority"></el-table-column>
+    <el-table-column label="截止时间" prop="taskEndTime"></el-table-column>
+    <el-table-column>
       <template slot-scope="scope">
       <el-button size="mini" @click="editTaskDialog(scope.row)">编辑</el-button>
       <el-button size="mini" type="danger" @click="taskDelete(scope.row)">删除</el-button>
       </template>
     </el-table-column>
-    </el-table>
+  </el-table>
+   <div style="text-align: center;margin-top: 30px;">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="total"
+        @current-change="currentChange"
+        :current-page="currentPage"
+        :page-size="pagesize">
+      </el-pagination>
+    </div>
     </el-container>
 </template>
 
@@ -160,6 +182,18 @@
   }
    .el-main {
     background-color: #F5F5F5;
+  }
+  .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 100px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
   }
 </style>
 
@@ -193,6 +227,7 @@ export default {
         })
         this.taskVOs = temdate
         console.log(this.taskVOs)
+        this.total = this.taskVOs.length
       })
     })
   },
@@ -257,7 +292,11 @@ export default {
         value: '已完成'
       }],
       newTaskDialogVisible: false,
-      editTaskDialogVisible: false
+      editTaskDialogVisible: false,
+      multipleSelection: [],
+      pagesize:6,
+      currentPage:1,
+      total: 0
     }
   },
   methods: {
@@ -285,6 +324,7 @@ export default {
             })
           })
           this.taskVOs = temdate
+          this.total = this.taskVOs.length
           console.log(this.taskVOs)
         })
       })
@@ -360,7 +400,10 @@ export default {
         url: 'http://47.97.196.50:8886/rest/task/' + task.taskId,
         method: 'delete'
       }).then(Response => { this.refresh() })
-    }
+    },
+    currentChange:function(currentPage){
+        this.currentPage = currentPage;
+      }
   }
 }
 </script>

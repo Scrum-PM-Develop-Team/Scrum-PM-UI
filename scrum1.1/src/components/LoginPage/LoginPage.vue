@@ -1,5 +1,5 @@
 <template>
-  <div style="background:url('..\..\assets\loginBackground.webp.jpg')">
+  <div>
     <el-col style="padding:30px; width: 400px; position: absolute; top: 20%; left:30%">
       <el-card style="height:300px;">
           <div slot="header" class="clearfix" style="height: 5px; display: table;content: ‘’;">
@@ -35,7 +35,6 @@ export default {
     ...mapMutations('login',['login','register','logout','updateUserInfo','getAll']),
     loginHandler(){
       this.login(this.info)
-      // this.getAll()
     },
     registerHandler(){
       this.register(this.info)
