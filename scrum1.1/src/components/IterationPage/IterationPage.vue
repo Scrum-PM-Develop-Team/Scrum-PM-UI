@@ -19,8 +19,6 @@
      <Task v-if="taskFlag" class="card"/>
      <Iteration v-else class="card"/>
   </el-main>
-  <el-button @click="change">改变
-  </el-button>
   </el-container>
 </template>
 
@@ -39,9 +37,6 @@ export default {
     }
   },
   methods: {
-    change () {
-      this.taskFlag = !this.taskFlag
-    },
     isTask () {
       this.taskFlag = true
     },

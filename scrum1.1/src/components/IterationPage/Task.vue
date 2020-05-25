@@ -3,10 +3,8 @@
     <!--顶栏容器-->
     <el-header style="text-align: font-size: 12px">
     <el-row :gutter="20">
-      <el-col :span="14"><div class="grid-content bg-purple">
+      <el-col :span="4"><div class="grid-content bg-purple">
       <el-button @click="newTaskDialog">增加任务</el-button></div></el-col>
-      <el-col :span="10"><div class="grid-content bg-purple">
-      </div></el-col>
       <!--增加任务的弹框-->
     <el-dialog
       title="增加任务"
