@@ -5,7 +5,6 @@
         mode="horizontal" 
         @select="handleSelect"
         id="navi">
-            <el-menu-index index="0">我的项目</el-menu-index>
             <el-menu-item index="1">项目迭代</el-menu-item>
             <el-menu-item index="2">任务看板</el-menu-item>
             <el-menu-item index="3">统计中心</el-menu-item>

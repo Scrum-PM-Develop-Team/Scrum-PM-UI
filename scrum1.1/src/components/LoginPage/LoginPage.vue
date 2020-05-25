@@ -33,7 +33,6 @@ export default {
   methods:{
     ...mapState('login',['userInfo']),  
     ...mapMutations('login',['login','register','logout','updateUserInfo','getAll']),
-    ...mapActions(),
     loginHandler(){
       this.login(this.info)
       // this.getAll()

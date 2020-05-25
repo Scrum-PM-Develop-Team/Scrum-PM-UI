@@ -6,7 +6,6 @@
         <NaviHeader></NaviHeader>
       </el-header>
       <el-main>
-        <div>{{currentProject}}</div>
         <!-- 页面内容  -->
         <router-view v-if="loginFlag"></router-view>
         <LoginPage v-else></LoginPage>
