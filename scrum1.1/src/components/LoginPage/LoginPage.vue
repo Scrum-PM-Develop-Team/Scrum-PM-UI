@@ -20,7 +20,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { mapMutations,mapActions } from 'Vuex'
+import { mapState,mapMutations,mapActions } from 'Vuex'
 export default {
   data(){
     return{
@@ -31,6 +31,7 @@ export default {
     }
   },
   methods:{
+    ...mapState('login',['userInfo']),  
     ...mapMutations('login',['login','register','logout','updateUserInfo','getAll']),
     ...mapActions(),
     loginHandler(){
