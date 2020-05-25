@@ -9,6 +9,17 @@ import ElementUI from 'element-ui'
 import Vuex from 'Vuex'
 import store from './store/store'
 
+var axios = require('axios')
+axios.defaults.baseURL = 'http://47.97.196.50:8886'
+Vue.prototype.$axios = axios
+
+import 'element-ui/lib/theme-chalk/index.css'
+import wlGantt from 'wl-gantt'
+
+import "wl-gantt/lib/wl-gantt.css"
+
+Vue.use(wlGantt)
+
 
 // 全局注册，之后可在其他组件中通过 this.$axios 发送数据
 // Vue.prototype.$axios = axios
