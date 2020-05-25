@@ -1,0 +1,48 @@
+<template>
+<el-container style="height: 600px">
+  <el-aside width="150px" >
+   <el-container >
+  <!--左边主菜单栏目-->
+    <el-menu>
+    <el-menu-item @click="isTask">
+      <i class="el-icon-location"></i>
+      <span slot="title">所有任务</span>
+    </el-menu-item>
+    <el-menu-item @click="isIteration">
+      <i class="el-icon-menu"></i>
+      <span slot="title">所有迭代</span>
+    </el-menu-item>
+    </el-menu>
+</el-container>
+  </el-aside>
+  <el-main>
+     <Task v-if="taskFlag" class="card"/>
+     <Iteration v-else class="card"/>
+  </el-main>
+  </el-container>
+</template>
+
+<style>
+</style>
+
+<script>
+import Task from './Task'
+import Iteration from './Iteration'
+export default {
+  name: 'App',
+  components: {Task, Iteration},
+  data () {
+    return {
+      taskFlag: true
+    }
+  },
+  methods: {
+    isTask () {
+      this.taskFlag = true
+    },
+    isIteration () {
+      this.taskFlag = false
+    }
+  }
+}
+</script>

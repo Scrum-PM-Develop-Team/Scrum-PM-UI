@@ -15,7 +15,7 @@ export default {
       toolbox: {
         show: true,
         feature: {
-          saveAsImage: { }
+          saveAsImage:                                                                              { }
         }
       },
       backgroundColor: '#323a5e',
