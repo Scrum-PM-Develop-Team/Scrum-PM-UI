@@ -5,7 +5,12 @@
         mode="horizontal" 
         @select="handleSelect"
         id="navi">
-            <el-menu-item index="1">项目迭代</el-menu-item>
+            <el-submenu index="1">
+                <template slot="title">项目迭代</template>
+                    <el-menu-item index="1-1">我的项目</el-menu-item>
+                    <el-menu-item index="1-2">所有迭代</el-menu-item>
+                    <el-menu-item index="1-3" divided>所有任务</el-menu-item>
+            </el-submenu>
             <el-menu-item index="2">任务看板</el-menu-item>
             <el-menu-item index="3">统计中心</el-menu-item>
             <el-submenu index="4" id="user-center-menu">
@@ -22,7 +27,7 @@
     export default {
         data(){
             return {
-                activeIndex:"1"
+                activeIndex:"1-1    "
             }
         },
         methods:{
@@ -35,7 +40,14 @@
                 });
                 switch(key){
                     case '1':
+                    case '1-1':
+                        this.$router.push('/MyProject')
+                        break;
+                    case '1-2':
                         this.$router.push('/Iteration')
+                        break;
+                    case '1-3':
+                        this.$router.push('Task')
                         break;
                     case '2':
                         this.$router.push('/TaskBoard')
@@ -43,7 +55,7 @@
                     case '3':
                         this.$router.push('/Info')
                         break;
-                    case '4-1':
+                    case '5-1':
                         this.$router.push('/Login')
                         break;
                 }
@@ -55,6 +67,6 @@
 <style>
 #user-center-menu{
   position:absolute;
-  left:90%
+  left:85%
 }
 </style>

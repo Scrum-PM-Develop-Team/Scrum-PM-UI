@@ -1,15 +1,17 @@
+
+
 <template>
     <el-card >
     <div class="header">
         <div class="left-header">
             <div>
-                <el-dropdown>
+                <el-dropdown @command="handleCommand1">
                     <span class="el-dropdown-link">
                       选择视图<i class="el-icon-arrow-down el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item style = "font-size: 18px">看板视图</el-dropdown-item>
-                      <el-dropdown-item style = "font-size: 18px" divided>时间视图</el-dropdown-item>
+                      <el-dropdown-item command="board" style = "font-size: 18px">看板视图</el-dropdown-item>
+                      <el-dropdown-item command="gantt" style = "font-size: 18px" divided>甘特图</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
             </div>
@@ -40,7 +42,7 @@
                     {{myArray1.length+"个"}}
                 </div>
             </div>
-            <draggable v-model="myArray1" class = "drag1"    @end="end" group="all" :options="{ booleanchosenClass:'choose',animation:150}">
+            <draggable v-model="myArray1"  :move="checkMove" class = "drag1"    @end="end" group="all" :options="{ booleanchosenClass:'choose',animation:150}">
             <div v-for="task in myArray1" :key="task.id" class="card" >
                 <el-card class="box-card" v-bind:id="task.taskId">
                     <div slot="header" class="clearfix">
@@ -68,7 +70,7 @@
                     {{myArray2.length+"个"}}
                 </div>
             </div>
-            <draggable v-model="myArray2" class = "drag2"   @end="end" group="all" :options="{ booleanchosenClass:'choose',animation:150}">
+            <draggable v-model="myArray2"  :move="checkMove" class = "drag2"   @end="end" group="all" :options="{ booleanchosenClass:'choose',animation:150}">
             <div v-for="task in myArray2" :key="task.id" class="card" >
                 <el-card class="box-card" v-bind:id="task.taskId">
                     <div slot="header" class="clearfix">
@@ -95,7 +97,7 @@
                     {{myArray3.length+"个"}}
                 </div>
             </div>
-             <draggable v-model="myArray3" class = "drag3"   @end="end" group="all" :options="{ booleanchosenClass:'choose',animation:150}">
+             <draggable v-model="myArray3" :move="checkMove" class = "drag3"   @end="end" group="all" :options="{ booleanchosenClass:'choose',animation:150}">
             <div v-for="task in myArray3" :key="task.id" class="card" >
                 <el-card class="box-card" v-bind:id="task.taskId">
                     <div slot="header" class="clearfix">
@@ -146,6 +148,7 @@
 
 <script>
 import draggable from 'vuedraggable'
+import {mapState,mapGetters} from 'Vuex'
 export default {
     name: 'board',
     data () {
@@ -156,19 +159,23 @@ export default {
         myArray2:[],
         myArray3:[],
         myArray4:[],
-        priorityId:"",
-        currentUserId:"10"
+        priorityId:""
       }
     },
+    computed:{
+        ...mapState('login',['userInfo']),  
+         ...mapGetters(['currentProject'])
+   },
     components: {
             draggable
         },
     mounted () {
     this.$axios
-    .get('/api/userNameForAll?userName='+'张俊杰4')
+    .get('/api/userNameForAll?userName='+this.userInfo.userName)
          .then(response => {
-              console.log(response.data.data)            
-          let project = response.data.data.filter(a=>a.teamProjectId == 2)
+              console.log(this.userInfo.userName)      
+              console.log(this.currentProject.teamProjectId)      
+          let project = response.data.data.filter(a=>a.teamProjectId == this.currentProject.teamProjectId)
           let iteration = project[0].iterationVOs.filter(function(b){
               return b.iterationState=="执行中"
           })
@@ -181,8 +188,6 @@ export default {
               if(this.myArray[i].taskState=='已完成'){this.myArray4.push(this.myArray[i])}
             }
             console.log(this.myArray[0].taskEndTime.slice(0,10))
-        //console.log( this.myArray)
-          //console.log( this.myArray1)
         })
         .catch(function (error) {
         console.log(error)
@@ -240,11 +245,23 @@ export default {
                 this.myArray3.sort( (a,b)=>{return this.highPSort(a,b)})
                 this.myArray4.sort((a,b)=>{return this.highPSort(a,b)})
                 break
+
          }
+      },
+      handleCommand1(command){
+          switch(command){
+              case 'board':
+                  this.$router.push('/TaskBoard')
+                    break;
+              case 'gantt':
+                  this.$router.push('/Gantt')
+                    break;
+          }
+
       },
         checkMove(evt){
            let userId = evt.dragged.firstElementChild.className
-           let bool =userId == this.currentUserId
+           let bool =userId == this.userInfo.userId
            if(bool==false){
                this.$alert('注意：只能改变自己负责任务的状态！', {
           confirmButtonText: '确定'})             
@@ -253,6 +270,7 @@ export default {
       }
             
   }}
+
 </script>
 
 <style scoped>
@@ -277,6 +295,7 @@ export default {
         float:left; 
         padding-top: 0px;
         padding-bottom: 12px;
+
     }
     #紧急{       
         background-color:rgba(236, 59, 59, 0.4);
