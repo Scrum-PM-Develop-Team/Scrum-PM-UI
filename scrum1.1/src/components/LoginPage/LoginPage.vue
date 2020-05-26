@@ -31,14 +31,19 @@ export default {
     }
   },
   methods:{
-    ...mapState('login',['userInfo']),  
+    //我感觉应该放在data里面，等会调一下
+    ...mapState('login',['userInfo']), 
+
     ...mapMutations('login',['login','register','logout','updateUserInfo','getAll']),
+
     loginHandler(){
       this.login(this.info)
     },
+
     registerHandler(){
       this.register(this.info)
     },
+    
     skinHandler(){
       this.login("test","password")
     }

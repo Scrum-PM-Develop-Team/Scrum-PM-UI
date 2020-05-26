@@ -11,22 +11,16 @@
       title="增加迭代"
       :visible.sync="newIterationDialogVisible"
       width="70%">
-      <el-row><el-input placeholder="迭代名"  v-model="newIteration.iterationVOs[0].iterationName" clearable></el-input></el-row>
-      <el-row><el-select v-model="newIteration.iterationVOs[0].iterationState" placeholder="任务状态">
-      <el-option
-        v-for="item in iterationState"
-        :key="item.value"
-        :label="item.value"
-        :value="item.value">
-      </el-option>
-      </el-select></el-row>
       <el-row>
-      <el-date-picker
-      v-model="newIteration.iterationVOs[0].iterationBeginTime"
-      type="datetime"
-      placeholder="迭代开始时间"
-      value-format="yyyy-MM-dd HH:mm:ss">
-      </el-date-picker>
+        <el-input placeholder="迭代名"  v-model="newIteration.iterationVOs[0].iterationName" clearable></el-input>
+      </el-row>
+      <el-row>
+        <el-select v-model="newIteration.iterationVOs[0].iterationState" placeholder="任务状态">
+          <el-option v-for="item in iterationState" :key="item.value" :label="item.value" :value="item.value"></el-option>
+        </el-select>
+      </el-row>
+      <el-row>
+        <el-date-picker v-model="newIteration.iterationVOs[0].iterationBeginTime" type="datetime" placeholder="迭代开始时间" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
       </el-row>
       <span slot="footer" class="dialog-footer">
       <el-button @click="newIteraDialogVisible = false">取 消</el-button>
