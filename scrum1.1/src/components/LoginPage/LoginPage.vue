@@ -30,14 +30,17 @@ export default {
       },
     }
   },
-  methods:{
-    //我感觉应该放在data里面，等会调一下
+  computed:{
     ...mapState('login',['userInfo']), 
+  },
+  methods:{
 
     ...mapMutations('login',['login','register','logout','updateUserInfo','getAll']),
 
     loginHandler(){
       this.login(this.info)
+      console.log('login/userInfo')
+      console.log(this.userInfo)
     },
 
     registerHandler(){

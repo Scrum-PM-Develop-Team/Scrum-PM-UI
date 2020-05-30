@@ -17,7 +17,7 @@ const login={
             userName:"",
             passWord:"",
         },
-        allData:''
+        allData:[]
     },
     mutations:{
         //登录
@@ -49,8 +49,8 @@ const login={
                         state.allData=Response.data.data
                         console.log("getAll:Response")
                         console.log(Response)
-                        console.log("state.allData[0]")
-                        console.log(state.allData[0])
+                        console.log("state.allData")
+                        console.log(state.allData)
                     })
                 }else{
                     Message({message: '密码错误',type: 'error'},true)

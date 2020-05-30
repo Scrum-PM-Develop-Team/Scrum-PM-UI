@@ -5,12 +5,9 @@
     <el-row :gutter="20">
       <el-col :span="2" :offset="22"><div class="grid-content bg-purple">
       <el-button @click="newIterationDialog"  type="primary" icon="el-icon-plus" circle></el-button></div></el-col>
-       </el-row>
+    </el-row>
       <!--增加迭代-->
-    <el-dialog
-      title="增加迭代"
-      :visible.sync="newIterationDialogVisible"
-      width="70%">
+    <el-dialog title="增加迭代" :visible.sync="newIterationDialogVisible" width="70%">
       <el-row>
         <el-input placeholder="迭代名"  v-model="newIteration.iterationVOs[0].iterationName" clearable></el-input>
       </el-row>
