@@ -51,7 +51,7 @@
       placeholder="迭代结束时间"
       value-format="yyyy-MM-dd HH:mm:ss">
       </el-date-picker>
-      </el-row>>
+      </el-row>
       <span slot="footer" class="dialog-footer">
       <el-button @click="editIterationDialogVisible = false">取 消</el-button>
       <el-button type="primary" @click="iterationEdit">确 定</el-button>
@@ -64,7 +64,7 @@
      <el-table-column prop="iterationName" label="名称" width="200"></el-table-column>
      <el-table-column prop="iterationState" label="状态"  width="120"></el-table-column>
      <el-table-column prop="iterationBeginTime"  label="开始时间"  width="150"></el-table-column>
-     <el-table-column prop="iterationEndTime"  label="结束时间"  width="150"></el-table-column>
+     <el-table-column prop=""  label="结束时间"  width="150"></el-table-column>
      <el-table-column label="操作" width="150">
       <template slot-scope="scope">
         <el-button size="mini" @click="editIterationDialog(scope.row)">编辑</el-button>
