@@ -22,13 +22,13 @@ const login={
     mutations:{
         //登录
         login(state,info){
-            axios({
-                url: '/rest/user',
-                method: 'get',
-                params: {
-                  userName: info.userName
-                }
-            }).then(Response=>{
+                axios({
+                    url: '/rest/user',
+                    method: 'get',
+                    params: {
+                    userName: info.userName
+                    }
+                }).then(Response=>{
                 if(Response.data.isok==false){
                     Message({message: '用户不存在',type: 'error'},true)
                 }else if(Response.data.data.userPassword==info.passWord){
@@ -77,6 +77,19 @@ const login={
                     Message({message: '注册成功',type: 'seccess'},true)
                     console.log("注册成功")
                 }
+                axios({
+                    url:'http://47.97.196.50:8886/api/userNameForAll',
+                    method:'get',
+                    params:{
+                        userName: state.userInfo.userName
+                    }
+                    }).then(Response=>{
+                        state.allData=Response.data.data
+                        console.log("getAll:Response")
+                        console.log(Response)
+                        console.log("state.allData")
+                        console.log(state.allData)
+                    })
             })
         },
         //注销
@@ -85,7 +98,7 @@ const login={
                 url: 'http://47.97.196.50:8886/rest/user',
                 method: 'delete',
                 data: {
-                  userId:state.userId
+                userId:state.userId
                 }
             }).then(Response=>{
                 

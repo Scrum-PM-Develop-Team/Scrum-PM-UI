@@ -169,6 +169,7 @@ export default {
     components: {
             draggable
         },
+        
     mounted () {
     this.$axios
     .get('/api/userNameForAll?userName='+this.userInfo.userName)
@@ -193,21 +194,28 @@ export default {
         console.log(error)
       })
      },
+
     methods:{
-       
         end(evt){
             //console.log(evt.item.firstElementChild.id)
             let tempId = evt.item.firstElementChild.id
-            {let tempState = "准备中"
-            if(evt.to.className=="drag1"){ tempState = "准备中"}
-            if(evt.to.className=="drag2"){ tempState = "执行中"}
-            if(evt.to.className=="drag3"){ tempState = "测试中"}
-            if(evt.to.className=="drag4"){ tempState = "已完成"}
+            let tempState = "准备中"
+            if(evt.to.className=="drag1")
+                tempState = "准备中"
+            if(evt.to.className=="drag2")
+                tempState = "执行中"
+            if(evt.to.className=="drag3")
+                tempState = "测试中"
+            if(evt.to.className=="drag4")
+                tempState = "已完成"
             //console.log(evt.to.className)
             //console.log(task)
-            this.$axios.put('/api/task',{"taskId":tempId,"taskState":tempState }).then((response) =>{
-             console.log(response)})
-        }
+            this.$axios.put('/api/task',
+                    {"taskId":tempId,"taskState":tempState })
+                .then((response) =>{
+                    console.log(response)
+                })
+            }
     },
          highPSort(a,b){
              if(a.taskPriority=='紧急'||(a.taskPriority=='一般'&&b.taskPriority=='较低'))return 1
@@ -269,7 +277,7 @@ export default {
            return (bool)
       }
             
-  }}
+  }
 
 </script>
 

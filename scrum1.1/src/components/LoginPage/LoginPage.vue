@@ -50,6 +50,7 @@ export default {
     skinHandler(){
       this.login("test","password")
     }
+    
   }
 };  
 </script>

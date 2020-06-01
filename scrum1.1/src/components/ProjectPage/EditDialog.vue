@@ -1,22 +1,50 @@
 <template>
     <div>
-        <el-dialog
-        title="编辑"
-        :visible.sync="editProjectDialogVisible"
-        width="30%">
-        <el-row>
-            <el-input placeholder="项目名"  v-model="tempProjectName" clearable></el-input>
-        </el-row>
-        <span slot="footer" class="dialog-footer">
-            <el-button @click="editProjectCancel">取 消</el-button>
-            <el-button type="primary" @click="editProjectConfirm">确 定</el-button>
-        </span>
-        </el-dialog>
+        
     </div>
 </template>
 
 <script>
+import {mapState, mapMutations} from 'vuex'
 export default {
-    
+    // data(){
+    //     return {
+    //         c: this.currentProject,
+    //         name: this.currentProject.teamProjectName
+    //     }
+    // },
+    // computed:{
+
+    //     ...mapState('login',['allData']),
+
+    //     ...mapState(['allData']),
+
+    //     ...mapState(['currentProject'])
+    // },
+    // methods:{
+
+    //     ...mapMutations(['setCurrentProject']),
+
+    //     ...mapMutations('login',['getAll']),
+
+    //     //保存处理函数
+    //     handleSave(){
+    //         c.temProjectName=name
+    //         this.setCurrentProject(c)
+    //          axios({
+    //             url: '/rest/teamProject',
+    //             method: 'put',
+    //             params: {
+    //                 teamProjectId:currentProject.teamProjectId,
+	//                 teamProjectName:name
+    //             }
+    //         }).then(Response=>{
+    //             this.getAll()
+    //         })
+    //     },
+    //     handleCancel(){
+
+    //     }
+    // }
 }
-</script>>
+</script>
