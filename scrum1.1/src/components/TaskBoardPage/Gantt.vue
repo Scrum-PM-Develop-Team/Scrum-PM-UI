@@ -50,10 +50,10 @@ export default {
    },
   mounted () {
     this.$axios
-    .get('/api/userNameForAll?userName='+this.userInfo.userName)
+    .get('/api/userNameForAll?userName='+'张俊杰4')
          .then(response => {
               //console.log(response.data.data)            
-          let project = response.data.data.filter(a=>a.teamProjectId == this.currentProject.teamProjectId)
+          let project = response.data.data.filter(a=>a.teamProjectId == 2)
           let iteration = project[0].iterationVOs.filter(function(b){
               return b.iterationState=="执行中"
           })
