@@ -50,10 +50,10 @@ export default {
    },
   mounted () {
     this.$axios
-    .get('/api/userNameForAll?userName='+this.userInfo.userName)
+    .get('/api/userNameForAll?userName='+'张俊杰4')
          .then(response => {
               //console.log(response.data.data)            
-          let project = response.data.data.filter(a=>a.teamProjectId == this.currentProject.teamProjectId)
+          let project = response.data.data.filter(a=>a.teamProjectId == 2)
           let iteration = project[0].iterationVOs.filter(function(b){
               return b.iterationState=="执行中"
           })
@@ -61,7 +61,6 @@ export default {
           this.myArray = iteration[0].taskVOs
           this.iterationBeginTime=iteration[0].iterationBeginTime
           this.iterationEndTime=iteration[0].iterationEndTime
-
           for (let i = 0; i < this.myArray.length; i++) { 
               if(this.myArray[i].taskState!=='已完成'){this.myArrayHere.push(this.myArray[i])}
             }
@@ -86,7 +85,6 @@ export default {
               }
             )
           }
-
            // console.log(this.myArray[0].taskEndTime.slice(0,10))
         //console.log( this.myArray)
           //console.log( this.myArray1)
@@ -104,7 +102,7 @@ export default {
     timeChange(row) {
       console.log("时间修改:", row);
       
-       this.$axios.put('/api/task',{"taskId":row.id,"taskBeginTime":row.startDate+" 12:12" , "taskEndTime":row.endDate+" 12:12"}).then((response) =>{
+       this.$axios.put('/api/task',{"taskId":row.id,"taskBeginTime":row.startDate+" 12:12" , "taskEndTime":row.endDate+" 12:12"}).then((response) =>{
              console.log(response)})
     },
     handleCommand1(command){

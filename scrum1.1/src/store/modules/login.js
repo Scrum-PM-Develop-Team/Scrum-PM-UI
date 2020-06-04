@@ -38,7 +38,7 @@ const login={
                     console.log("state.userInfo")
                     console.log(state.userInfo)
                     state.loginFlag=true
-                    Message({message: '登录成功'+state.loginFlag,type: 'success'},true)
+                    Message({message: '登录成功',type: 'success'},true)
                     axios({
                         url:'http://47.97.196.50:8886/api/userNameForAll',
                         method:'get',

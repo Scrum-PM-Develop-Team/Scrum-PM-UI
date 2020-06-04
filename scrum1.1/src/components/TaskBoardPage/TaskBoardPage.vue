@@ -1,5 +1,3 @@
-
-
 <template>
     <el-card >
     <div class="header">
@@ -39,13 +37,13 @@
                     准备中
                 </div>
                 <div>
-                    {{myArray1.length+"个"}}
+                    {{readyArray.length+"个"}}
                 </div>
             </div>
-            <draggable v-model="myArray1"  :move="checkMove" class = "drag1"    @end="end" group="all" :options="{ booleanchosenClass:'choose',animation:150}">
-            <div v-for="task in myArray1" :key="task.id" class="card" >
-                <el-card class="box-card" v-bind:id="task.taskId">
-                    <div slot="header" class="clearfix">
+            <draggable v-model="readyArray"  :move="checkMove" class = "drag1"    @end="end" group="all" :options="{ booleanchosenClass:'choose',animation:150}">
+            <div v-for="task in readyArray" :key="task.id" class="card" >
+               <el-card v-bind:class="task.taskId" v-bind:id="task.taskExecutor.userId+'in'+task.taskId">
+                    <div slot="header" class="clearfix" >
                         <span class='taskName'>{{task.taskRemark}}</span>
                         <span class='userName' type="text">{{task.taskExecutor.userName}}</span>
                     </div>
@@ -67,13 +65,13 @@
                     执行中
                 </div>
                 <div>
-                    {{myArray2.length+"个"}}
+                    {{doningArray.length+"个"}}
                 </div>
             </div>
-            <draggable v-model="myArray2"  :move="checkMove" class = "drag2"   @end="end" group="all" :options="{ booleanchosenClass:'choose',animation:150}">
-            <div v-for="task in myArray2" :key="task.id" class="card" >
-                <el-card class="box-card" v-bind:id="task.taskId">
-                    <div slot="header" class="clearfix">
+            <draggable v-model="doningArray"  :move="checkMove" class = "drag2"   @end="end" group="all" :options="{ booleanchosenClass:'choose',animation:150}">
+            <div v-for="task in doningArray" :key="task.id" class="card" >
+               <el-card v-bind:class="task.taskId" v-bind:id="task.taskExecutor.userId+'in'+task.taskId">
+                    <div slot="header" class="clearfix" >
                         <span class='taskName'>{{task.taskRemark}}</span>
                         <span class='userName' type="text">{{task.taskExecutor.userName}}</span>
                     </div>
@@ -94,13 +92,13 @@
                     测试中
                 </div>
                 <div>
-                    {{myArray3.length+"个"}}
+                    {{testingArray.length+"个"}}
                 </div>
             </div>
-             <draggable v-model="myArray3" :move="checkMove" class = "drag3"   @end="end" group="all" :options="{ booleanchosenClass:'choose',animation:150}">
-            <div v-for="task in myArray3" :key="task.id" class="card" >
-                <el-card class="box-card" v-bind:id="task.taskId">
-                    <div slot="header" class="clearfix">
+             <draggable v-model="testingArray" :move="checkMove" class = "drag3"   @end="end" group="all" :options="{ booleanchosenClass:'choose',animation:150}">
+            <div v-for="task in testingArray" :key="task.id" class="card" >
+                <el-card v-bind:class="task.taskId" v-bind:id="task.taskExecutor.userId+'in'+task.taskId">
+                    <div slot="header" class="clearfix" >
                         <span class='taskName'>{{task.taskRemark}}</span>
                         <span class='userName' type="text">{{task.taskExecutor.userName}}</span>
                     </div>
@@ -121,13 +119,13 @@
                     已完成
                 </div>
                 <div>
-                    {{myArray4.length+"个"}}
+                    {{doneArray.length+"个"}}
                 </div>
             </div>
-            <draggable v-model="myArray4"  :move="checkMove" class = "drag4"   @end="end" group="all" :options="{ booleanchosenClass:'choose',animation:150}">
-            <div v-for="task in myArray4" :key="task.id"   class="card">
-                <el-card v-bind:class="task.userName" v-bind:id="task.taskId">
-                    <div slot="header" class="clearfix">
+            <draggable v-model="doneArray"  :move="checkMove" class = "drag4"   @end="end" group="all" :options="{ booleanchosenClass:'choose',animation:150}">
+            <div v-for="task in doneArray" :key="task.id"   class="card">
+               <el-card v-bind:class="task.taskId" v-bind:id="task.taskExecutor.userId+'in'+task.taskId">
+                    <div slot="header" class="clearfix" >
                         <span class='taskName'>{{task.taskRemark}}</span>
                         <span class='userName' type="text">{{task.taskExecutor.userName}}</span>
                     </div>
@@ -154,11 +152,11 @@ export default {
     data () {
       return {
         visible: false,
-        myArray:[],
-        myArray1:[],
-        myArray2:[],
-        myArray3:[],
-        myArray4:[],
+        allTaskArray:[],
+        readyArray:[],
+        doningArray:[],
+        testingArray:[],
+        doneArray:[],
         priorityId:""
       }
     },
@@ -169,53 +167,49 @@ export default {
     components: {
             draggable
         },
-        
     mounted () {
     this.$axios
-    .get('/api/userNameForAll?userName='+this.userInfo.userName)
+    .get('/api/userNameForAll?userName='+'张俊杰4')
          .then(response => {
-              console.log(this.userInfo.userName)      
-              console.log(this.currentProject.teamProjectId)      
-          let project = response.data.data.filter(a=>a.teamProjectId == this.currentProject.teamProjectId)
+              //console.log(this.userInfo.userName)      
+              //console.log(this.currentProject.teamProjectId)      
+          let project = response.data.data.filter(a=>a.teamProjectId ==2)
           let iteration = project[0].iterationVOs.filter(function(b){
               return b.iterationState=="执行中"
           })
          console.log( iteration[0])
-          this.myArray = iteration[0].taskVOs
-          for (let i = 0; i < this.myArray.length; i++) { 
-              if(this.myArray[i].taskState=='准备中'){this.myArray1.push(this.myArray[i])}
-              if(this.myArray[i].taskState=='执行中'){this.myArray2.push(this.myArray[i])}
-              if(this.myArray[i].taskState=='测试中'){this.myArray3.push(this.myArray[i])}
-              if(this.myArray[i].taskState=='已完成'){this.myArray4.push(this.myArray[i])}
+          this.allTaskArray = iteration[0].taskVOs
+          for (let i = 0; i < this.allTaskArray.length; i++) { 
+              if(this.allTaskArray[i].taskState=='准备中'){this.readyArray.push(this.allTaskArray[i])}
+              if(this.allTaskArray[i].taskState=='执行中'){this.doningArray.push(this.allTaskArray[i])}
+              if(this.allTaskArray[i].taskState=='测试中'){this.testingArray.push(this.allTaskArray[i])}
+              if(this.allTaskArray[i].taskState=='已完成'){this.doneArray.push(this.allTaskArray[i])}
             }
-            console.log(this.myArray[0].taskEndTime.slice(0,10))
+            //console.log(this.allTaskArray[0].taskEndTime.slice(0,10))
         })
         .catch(function (error) {
         console.log(error)
       })
      },
-
     methods:{
+       
         end(evt){
             //console.log(evt.item.firstElementChild.id)
-            let tempId = evt.item.firstElementChild.id
-            let tempState = "准备中"
-            if(evt.to.className=="drag1")
-                tempState = "准备中"
-            if(evt.to.className=="drag2")
-                tempState = "执行中"
-            if(evt.to.className=="drag3")
-                tempState = "测试中"
-            if(evt.to.className=="drag4")
-                tempState = "已完成"
+            let reg =/\d+/g
+            let idArray=evt.item.firstElementChild.id.match(reg)
+            let tempId = Number(idArray[1])
+            console.log("array  "+idArray)
+            console.log(idArray[1])
+            {let tempState = "准备中"
+            if(evt.to.className=="drag1"){ tempState = "准备中"}
+            if(evt.to.className=="drag2"){ tempState = "执行中"}
+            if(evt.to.className=="drag3"){ tempState = "测试中"}
+            if(evt.to.className=="drag4"){ tempState = "已完成"}
             //console.log(evt.to.className)
             //console.log(task)
-            this.$axios.put('/api/task',
-                    {"taskId":tempId,"taskState":tempState })
-                .then((response) =>{
-                    console.log(response)
-                })
-            }
+            this.$axios.put('/api/task',{"taskId":tempId,"taskState":tempState }).then((response) =>{
+             console.log(response)})
+        }
     },
          highPSort(a,b){
              if(a.taskPriority=='紧急'||(a.taskPriority=='一般'&&b.taskPriority=='较低'))return 1
@@ -230,30 +224,29 @@ export default {
         handleCommand(command) {
          switch(command){
              case 'close':
-                this.myArray1.sort(function(a,b){  return new Date(a.taskEndTime) - new Date(b.taskEndTime)})
-                this.myArray2.sort(function(a,b){return new Date(a.taskEndTime) - new Date(b.taskEndTime)})
-                this.myArray3.sort(function(a,b){return new Date(a.taskEndTime) - new Date(b.taskEndTime)})
-                this.myArray4.sort(function(a,b){return new Date(a.taskEndTime) - new Date(b.taskEndTime)})
+                this.readyArray.sort(function(a,b){  return new Date(a.taskEndTime) - new Date(b.taskEndTime)})
+                this.doningArray.sort(function(a,b){return new Date(a.taskEndTime) - new Date(b.taskEndTime)})
+                this.testingArray.sort(function(a,b){return new Date(a.taskEndTime) - new Date(b.taskEndTime)})
+                this.doneArray.sort(function(a,b){return new Date(a.taskEndTime) - new Date(b.taskEndTime)})
                 break
             case 'far':
-                this.myArray1.sort(function(a,b){ return new Date(b.taskEndTime) - new Date(a.taskEndTime)})
-                this.myArray2.sort(function(a,b){return new Date(b.taskEndTime) - new Date(a.taskEndTime)})
-                this.myArray3.sort(function(a,b){return new Date(b.taskEndTime) - new Date(a.taskEndTime)})
-                this.myArray4.sort(function(a,b){return new Date(b.taskEndTime) - new Date(a.taskEndTime)})
+                this.readyArray.sort(function(a,b){ return new Date(b.taskEndTime) - new Date(a.taskEndTime)})
+                this.doningArray.sort(function(a,b){return new Date(b.taskEndTime) - new Date(a.taskEndTime)})
+                this.testingArray.sort(function(a,b){return new Date(b.taskEndTime) - new Date(a.taskEndTime)})
+                this.doneArray.sort(function(a,b){return new Date(b.taskEndTime) - new Date(a.taskEndTime)})
                 break
             case 'highP':
-                this.myArray1.sort((a,b)=>{return this.lowPSort(a,b)})
-                this.myArray2.sort((a,b)=>{return this.lowPSort(a,b)})
-                this.myArray3.sort( (a,b)=>{return this.lowPSort(a,b)})
-                this.myArray4.sort((a,b)=>{return this.lowPSort(a,b)})
+                this.readyArray.sort((a,b)=>{return this.lowPSort(a,b)})
+                this.doningArray.sort((a,b)=>{return this.lowPSort(a,b)})
+                this.testingArray.sort( (a,b)=>{return this.lowPSort(a,b)})
+                this.doneArray.sort((a,b)=>{return this.lowPSort(a,b)})
                 break
              case 'lowP':
-                this.myArray1.sort((a,b)=>{return this.highPSort(a,b)})
-                this.myArray2.sort((a,b)=>{return this.highPSort(a,b)})
-                this.myArray3.sort( (a,b)=>{return this.highPSort(a,b)})
-                this.myArray4.sort((a,b)=>{return this.highPSort(a,b)})
+                this.readyArray.sort((a,b)=>{return this.highPSort(a,b)})
+                this.doningArray.sort((a,b)=>{return this.highPSort(a,b)})
+                this.testingArray.sort( (a,b)=>{return this.highPSort(a,b)})
+                this.doneArray.sort((a,b)=>{return this.highPSort(a,b)})
                 break
-
          }
       },
       handleCommand1(command){
@@ -265,20 +258,23 @@ export default {
                   this.$router.push('/Gantt')
                     break;
           }
-
       },
         checkMove(evt){
-           let userId = evt.dragged.firstElementChild.className
+           let reg2 =/\d+/g
+           let idArray2=evt.dragged.firstElementChild.id.match(reg2)
+           let userId = idArray2[0]
            let bool =userId == this.userInfo.userId
+           console.log("aaaaaaa  "+idArray2[0]+"  sdfdfd")
+            console.log("dangqian"+this.userInfo.userId)
            if(bool==false){
+               console.log(bool)
                this.$alert('注意：只能改变自己负责任务的状态！', {
           confirmButtonText: '确定'})             
            }
            return (bool)
       }
             
-  }
-
+  }}
 </script>
 
 <style scoped>
@@ -303,7 +299,6 @@ export default {
         float:left; 
         padding-top: 0px;
         padding-bottom: 12px;
-
     }
     #紧急{       
         background-color:rgba(236, 59, 59, 0.4);
@@ -394,7 +389,7 @@ export default {
     }
     .bg-purple-light {
       background: #e5e9f2;
-    }
+    }   
     .grid-content {
       border-radius: 20px;
       min-height: 36px;

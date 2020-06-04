@@ -20,7 +20,8 @@
     "vue-axios": "^2.1.5",
     "vue-router": "^3.0.1",
     "vuedraggable": "^2.23.2",
-    "vuex": "^3.4.0"
+    "vuex": "^3.4.0",
+    "wl-gantt": "^1.0.3"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
